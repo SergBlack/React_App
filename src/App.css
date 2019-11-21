@@ -1,0 +1,68 @@
+.app-wrapper {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "navbar content"
+    "footer footer";
+  grid-template-rows: 1fr 5fr 1fr;
+  grid-template-columns: 200px 3fr;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+  margin: 5px 5px;
+  /*width: 1200px;*/
+}
+
+.header {
+  grid-area: header;
+  background-color: rgba(27, 190, 190, 0.8);
+}
+
+.header img {
+  width: 100px;
+  border: 1px solid rgba(27, 190, 190, 0.8);
+}
+
+.nav {
+  grid-area: navbar;
+  background-color: rgba(143, 253, 180, 0.8);
+}
+
+.content {
+  grid-area: content;
+  background-color: rgb(245, 231, 170);
+}
+
+.footer {
+  grid-area: footer;
+  background-color: rgb(187, 215, 238);
+}
+
+.content .ava img {
+  width: 200px;
+  height: 200px;
+}
+
+/*
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #09d3ac;
+}
+*/
