@@ -1,6 +1,7 @@
 import React from "react";
 import ozera from "../images/ozera.jpg";
 import goblin from "../images/goblin.png";
+import "./Profile.css";
 
 const Profile = () => {
   return (

@@ -1,0 +1,8 @@
+.nav {
+    grid-area: navbar;
+    background-color: rgba(93, 224, 137, 0.8);
+}
+
+.navItem {
+    color: white;
+}

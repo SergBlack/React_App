@@ -1,13 +1,14 @@
 import React from "react";
+import "./Footer.css";
 
 const Footer = () => {
   return (
     <nav className="footer">
       <div>
-        <a>Contacts</a>
+        <a href="x">Contacts</a>
       </div>
       <div>
-        <a>Fakebook</a>
+        <a href="x">Fakebook</a>
       </div>
     </nav>
   );
