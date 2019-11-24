@@ -1,9 +1,9 @@
 import React from "react";
-import "./Footer.css";
+import styles from "./Footer.module.css";
 
 const Footer = () => {
   return (
-    <nav className="footer">
+    <nav className={styles.footer}>
       <div>
         <a href="x">Contacts</a>
       </div>

@@ -1,0 +1,14 @@
+.content {
+  grid-area: content;
+  background-color: rgb(245, 231, 170);
+}
+
+.img {
+  width: auto;
+  height: auto;
+}
+
+.ava {
+  width: 200px;
+  height: 200px;
+}
