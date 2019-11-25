@@ -1,0 +1,19 @@
+.dialogs {
+  display: grid;
+  grid-template-columns: 2fr 8fr;
+  padding: 10px;
+}
+
+.userName {
+  text-align: right;
+  color: blue;
+  padding: 15px;
+}
+
+/* .messages {
+  border: 1px solid black;
+} */
+
+.userMessages {
+  padding: 15px;
+}
