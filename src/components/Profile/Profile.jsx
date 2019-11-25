@@ -7,7 +7,7 @@ import MyPosts from "./MyPosts/MyPosts";
 const Profile = () => {
   return (
     <div>
-      <div className={styles.content}>
+      <div>
         <img className={styles.img} src={ozera} alt="something..." />
       </div>
       <div>
