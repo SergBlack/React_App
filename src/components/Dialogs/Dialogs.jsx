@@ -1,20 +1,34 @@
 import React from "react";
 import styles from "./Dialogs.module.css";
+import { NavLink } from "react-router-dom";
+
+const DialogItem = props => {
+  let path = "/dialogs/" + props.id;
+  return (
+    <div>
+      <NavLink to={path}>{props.name}</NavLink>
+    </div>
+  );
+};
+
+const UserMessages = props => {
+  return <div className={styles.userMessages}>{props.messages}</div>;
+};
 
 const Dialogs = () => {
   return (
     <div className={styles.dialogs}>
-      <div>
-        <div className={styles.userName}>Pasha</div>
-        <div className={styles.userName}>Dasha</div>
-        <div className={styles.userName}>Sasha</div>
-        <div className={styles.userName}>Masha</div>
+      <div className={styles.usersName}>
+        <DialogItem name="Pasha" id="1" />
+        <DialogItem name="Dasha" id="2" />
+        <DialogItem name="Sasha" id="3" />
+        <DialogItem name="Masha" id="4" />
       </div>
-      <div>
-        <div className={styles.userMessages}>Hey Dude!</div>
-        <div className={styles.userMessages}>Wazzaup!</div>
-        <div className={styles.userMessages}>Link me!</div>
-        <div className={styles.userMessages}>Wrong chat!</div>
+      <div className={styles.messages}>
+        <UserMessages messages="Hey Dude!" />
+        <UserMessages messages="Wazzaup!" />
+        <UserMessages messages="Link me!" />
+        <UserMessages messages="Wrong chat!" />
       </div>
     </div>
   );

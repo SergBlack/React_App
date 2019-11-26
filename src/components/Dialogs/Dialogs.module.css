@@ -4,15 +4,17 @@
   padding: 10px;
 }
 
+.usersName {
+}
+
 .userName {
   text-align: right;
   color: blue;
   padding: 15px;
 }
 
-/* .messages {
-  border: 1px solid black;
-} */
+.messages {
+}
 
 .userMessages {
   padding: 15px;
