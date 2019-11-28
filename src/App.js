@@ -11,14 +11,22 @@ import Footer from "./components/Footer/Footer";
 import { Route, BrowserRouter } from "react-router-dom";
 
 const App = props => {
+  //console.log({ props });
+  //props.props.dialogsData props.props.messagesData props.props.postsData
   return (
     <BrowserRouter>
       <div className="app-wrapper">
         <Header />
         <Navbar />
         <div className="app-wrapper-content">
-          <Route path="/profile" render={() => <Profile />} />
-          <Route path="/dialogs" render={() => <Dialogs />} />
+          <Route
+            path="/profile"
+            render={() => <Profile state={props.state.profilePage} />}
+          />
+          <Route
+            path="/dialogs"
+            render={() => <Dialogs state={props.state.dialogsPage} />}
+          />
           <Route path="/news" render={() => <News />} />
           <Route path="/music" render={() => <Music />} />
           <Route path="/settings" render={() => <Settings />} />

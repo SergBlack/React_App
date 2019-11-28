@@ -4,15 +4,11 @@ import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPosts from "./MyPosts/MyPosts";
 
 const Profile = props => {
-  let postsData = [
-    { id: 1, message: "Hey", likesCount: "0" },
-    { id: 2, message: "Lets go", likesCount: "10" },
-    { id: 3, message: "Busy now", likesCount: "20" }
-  ];
+  //console.log({ props });
   return (
     <div>
       <ProfileInfo />
-      <MyPosts posts={postsData} />
+      <MyPosts posts={props.state.postsData} />
     </div>
   );
 };
