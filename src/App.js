@@ -11,13 +11,11 @@ import Footer from "./components/Footer/Footer";
 import { Route, BrowserRouter } from "react-router-dom";
 
 const App = props => {
-  //console.log({ props });
-  //props.props.dialogsData props.props.messagesData props.props.postsData
   return (
     <BrowserRouter>
       <div className="app-wrapper">
         <Header />
-        <Navbar />
+        <Navbar state={props.state.sidebarUserOnline} />
         <div className="app-wrapper-content">
           <Route
             path="/profile"

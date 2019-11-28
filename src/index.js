@@ -5,9 +5,6 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import state from "./Redux/state";
 
-//console.log({ state });
-//state.dialogsData state.messagesData state.postsData
-
 ReactDOM.render(<App state={state} />, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change

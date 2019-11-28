@@ -1,5 +1,4 @@
 let state = {
-  //to Dialogs
   dialogsPage: {
     messagesData: [
       { id: 1, message: "Hey Dude!" },
@@ -15,12 +14,19 @@ let state = {
     ]
   },
 
-  //to Profile
   profilePage: {
     postsData: [
       { id: 1, message: "Hey", likesCount: "0" },
       { id: 2, message: "Lets go", likesCount: "10" },
       { id: 3, message: "Busy now", likesCount: "20" }
+    ]
+  },
+
+  sidebarUserOnline: {
+    user: [
+      { name: "Lenin", age: 33, sex: "male" },
+      { name: "Lara", age: 23, sex: "female" },
+      { name: "Pushkin", age: 66, sex: "male" }
     ]
   }
 };

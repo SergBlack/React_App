@@ -27,3 +27,18 @@
   /* Font styles */
   text-decoration: none;
 }
+
+.navbarFriends {
+  font-size: 44px;
+  margin: 300px 0px 0px auto;
+  text-align: center;
+}
+
+.userIcon {
+  font-size: 14px;
+  background-color: rgb(255, 153, 0);
+  border-radius: 40px;
+  width: 80px;
+  height: 80px;
+  align-content: center;
+}
