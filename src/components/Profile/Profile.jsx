@@ -12,7 +12,7 @@ const Profile = props => {
         <img className={styles.img} src={ozera} alt="something..." />
       </div>
       <ProfileInfo />
-      <MyPosts posts={props.state.postsData} />
+      <MyPosts posts={props.state.postsData} addPost={props.addPost} />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import styles from "./MyPosts.module.css";
 import Post from "./Post/Post";
 
 const MyPosts = props => {
+  console.log(props);
   let postsElements = props.posts.map(el => {
     return <Post id={el.id} message={el.message} likesCount={el.likesCount} />;
   });
@@ -11,7 +12,7 @@ const MyPosts = props => {
 
   let addPost = () => {
     let text = newRef.current.value;
-    alert(text);
+    props.addPost(text);
   };
 
   return (
