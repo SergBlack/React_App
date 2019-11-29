@@ -3,13 +3,15 @@ import styles from "./../Navbar.module.css";
 import OnlineUser from "./OnlineUser";
 
 const NavbarUsers = props => {
-  let onlineUser = props.user.map(el => {
-    return <OnlineUser name={el.name} age={el.age} sex={el.sex} />;
+  let onlineUserList = props.user.map((el, index) => {
+    if (index < 3) {
+      return <OnlineUser name={el.name} />;
+    }
   });
   return (
     <div>
       <div>Friends</div>
-      <div>{onlineUser}</div>
+      <div className={styles.usersIcons}>{onlineUserList}</div>
     </div>
   );
 };
