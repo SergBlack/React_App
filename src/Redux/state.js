@@ -13,7 +13,8 @@ let state = {
       { id: 2, name: "Dasha" },
       { id: 3, name: "Sasha" },
       { id: 4, name: "Masha" }
-    ]
+    ],
+    newMessageText: ""
   },
 
   profilePage: {
@@ -52,5 +53,21 @@ let updateNewPostText = newText => {
   rerenderEntireTree(state);
 };
 
+//Функция доб. сообщения
+let addMessage = () => {
+  let newMessage = {
+    id: 5,
+    message: state.dialogsPage.newMessageText
+  };
+  state.dialogsPage.messagesData.push(newMessage);
+  state.dialogsPage.newMessageText = "";
+  rerenderEntireTree(state);
+};
+
+let updateNewMessageText = newText => {
+  state.dialogsPage.newMessageText = newText;
+  rerenderEntireTree(state);
+};
+
 export default state;
-export { addPost, updateNewPostText };
+export { addPost, updateNewPostText, addMessage, updateNewMessageText };
