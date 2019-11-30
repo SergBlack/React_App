@@ -3,16 +3,25 @@ import styles from "./MyPosts.module.css";
 import Post from "./Post/Post";
 
 const MyPosts = props => {
-  console.log(props);
-  let postsElements = props.posts.map(el => {
+  let postsElements = props.posts.map((el, index) => {
     return <Post id={el.id} message={el.message} likesCount={el.likesCount} />;
   });
 
   let newRef = React.createRef();
 
+  // let addPost = () => {
+  //   let text = newRef.current.value;
+  //   props.addPost(text);
+  //   newRef.current.value = "";
+  // };
+
   let addPost = () => {
+    props.addPost();
+  };
+
+  let onPostChange = () => {
     let text = newRef.current.value;
-    props.addPost(text);
+    props.updateNewPostText(text);
   };
 
   return (
@@ -20,7 +29,11 @@ const MyPosts = props => {
       <h3>My posts</h3>
       <div>
         <div>
-          <textarea ref={newRef}></textarea>
+          <textarea
+            onChange={onPostChange}
+            ref={newRef}
+            value={props.newPostText}
+          />
         </div>
         <button onClick={addPost}>Add post</button>
       </div>
