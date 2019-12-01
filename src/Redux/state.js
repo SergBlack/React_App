@@ -1,4 +1,6 @@
-import rerenderEntireTree from "./../render";
+let rerenderEntireTree = () => {
+  console.log("state is changed");
+};
 
 let state = {
   dialogsPage: {
@@ -37,7 +39,7 @@ let state = {
   }
 };
 
-let addPost = () => {
+const addPost = () => {
   let newPost = {
     id: 5,
     message: state.profilePage.newPostText,
@@ -48,13 +50,13 @@ let addPost = () => {
   rerenderEntireTree(state);
 };
 
-let updateNewPostText = newText => {
+const updateNewPostText = newText => {
   state.profilePage.newPostText = newText;
   rerenderEntireTree(state);
 };
 
 //Функция доб. сообщения
-let addMessage = () => {
+const addMessage = () => {
   let newMessage = {
     id: 5,
     message: state.dialogsPage.newMessageText
@@ -64,10 +66,21 @@ let addMessage = () => {
   rerenderEntireTree(state);
 };
 
-let updateNewMessageText = newText => {
+const updateNewMessageText = newText => {
   state.dialogsPage.newMessageText = newText;
   rerenderEntireTree(state);
 };
 
+//observer (publisher-subscriber)
+const subscribe = observer => {
+  rerenderEntireTree = observer;
+};
+
 export default state;
-export { addPost, updateNewPostText, addMessage, updateNewMessageText };
+export {
+  addPost,
+  updateNewPostText,
+  addMessage,
+  updateNewMessageText,
+  subscribe
+};
