@@ -4,20 +4,24 @@ import DialogItem from "./DialogItem/DialogItem";
 import UserMessages from "./UserMessages/UserMessages";
 
 const Dialogs = props => {
-  let dialogsElements = props.dialogsPage.dialogsData.map((el, index) => {
+  let dialogsElements = props.state.dialogsData.map((el, index) => {
     return <DialogItem name={el.name} id={el.id} />;
   });
 
-  let messagesElements = props.dialogsPage.messagesData.map((el, index) => {
+  let messagesElements = props.state.messagesData.map((el, index) => {
     return <UserMessages messages={el.message} />;
   });
 
   //Иниц ссылки
   let newRef = React.createRef();
 
+  let addMessage = () => {
+    props.dispatch({ type: "ADD-MESSAGE" });
+  };
+
   let messageOnChange = () => {
     let text = newRef.current.value;
-    props.updateNewMessageText(text);
+    props.dispatch({ type: "UPDATE-NEW-MESSAGE-TEXT", newText: text });
   };
 
   return (
@@ -29,12 +33,12 @@ const Dialogs = props => {
         <textarea
           onChange={messageOnChange}
           ref={newRef}
-          value={props.dialogsPage.newMessageText}
+          value={props.state.newMessageText}
         ></textarea>
       </div>
       <div>
         {/*клик мышки вызывает addMessage */}
-        <button onClick={props.addMessage}>Add message</button>
+        <button onClick={addMessage}>Add message</button>
       </div>
     </div>
   );

@@ -27,7 +27,7 @@ let store = {
 
     sidebarUserOnline: {
       user: [
-        { name: "Lenin", age: 33, sex: "male" },
+        { name: "Penin", age: 33, sex: "male" },
         { name: "Lara", age: 23, sex: "female" },
         { name: "Pushkin", age: 66, sex: "male" },
         { name: "show max 3 user online" },
@@ -35,41 +35,67 @@ let store = {
       ]
     }
   },
-  getState() {
-    return this._state;
-  },
   _callSubscriber() {
     console.log("state is changed");
   },
-  addPost() {
-    let newPost = {
-      id: 5,
-      message: this._state.profilePage.newPostText,
-      likesCount: "0"
-    };
-    this._state.profilePage.postsData.push(newPost);
-    this._state.profilePage.newPostText = "";
-    this._callSubscriber(this._state);
-  },
-  updateNewPostText(newText) {
-    this._state.profilePage.newPostText = newText;
-    this._callSubscriber(this._state);
-  },
-  addMessage() {
-    let newMessage = {
-      id: 5,
-      message: this._state.dialogsPage.newMessageText
-    };
-    this._state.dialogsPage.messagesData.push(newMessage);
-    this._state.dialogsPage.newMessageText = "";
-    this._callSubscriber(this._state);
-  },
-  updateNewMessageText(newText) {
-    this._state.dialogsPage.newMessageText = newText;
-    this._callSubscriber(this._state);
+  getState() {
+    return this._state;
   },
   subscribe(observer) {
     this._callSubscriber = observer;
+  },
+  // addPost() {
+  //   let newPost = {
+  //     id: 5,
+  //     message: this._state.profilePage.newPostText,
+  //     likesCount: "0"
+  //   };
+  //   this._state.profilePage.postsData.push(newPost);
+  //   this._state.profilePage.newPostText = "";
+  //   this._callSubscriber(this._state);
+  // },
+  // updateNewPostText(newText) {
+  //   this._state.profilePage.newPostText = newText;
+  //   this._callSubscriber(this._state);
+  // },
+  // addMessage() {
+  //   let newMessage = {
+  //     id: 5,
+  //     message: this._state.dialogsPage.newMessageText
+  //   };
+  //   this._state.dialogsPage.messagesData.push(newMessage);
+  //   this._state.dialogsPage.newMessageText = "";
+  //   this._callSubscriber(this._state);
+  // },
+  // updateNewMessageText(newText) {
+  //   this._state.dialogsPage.newMessageText = newText;
+  //   this._callSubscriber(this._state);
+  // }
+  dispatch(action) {
+    if (action.type === "ADD-POST") {
+      let newPost = {
+        id: 5,
+        message: this._state.profilePage.newPostText,
+        likesCount: "0"
+      };
+      this._state.profilePage.postsData.push(newPost);
+      this._state.profilePage.newPostText = "";
+      this._callSubscriber(this._state);
+    } else if (action.type === "UPDATE-NEW-POST-TEXT") {
+      this._state.profilePage.newPostText = action.newText;
+      this._callSubscriber(this._state);
+    } else if (action.type === "ADD-MESSAGE") {
+      let newMessage = {
+        id: 5,
+        message: this._state.dialogsPage.newMessageText
+      };
+      this._state.dialogsPage.messagesData.push(newMessage);
+      this._state.dialogsPage.newMessageText = "";
+      this._callSubscriber(this._state);
+    } else if (action.type === "UPDATE-NEW-MESSAGE-TEXT") {
+      this._state.dialogsPage.newMessageText = action.newText;
+      this._callSubscriber(this._state);
+    }
   }
 };
 
