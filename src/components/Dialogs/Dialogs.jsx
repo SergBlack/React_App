@@ -5,7 +5,7 @@ import UserMessages from "./UserMessages/UserMessages";
 import {
   addMessageActionCreator,
   updateNewMessageTextActionCreator
-} from "./../../Redux/state";
+} from "./../../Redux/dialogs-reducer";
 
 const Dialogs = props => {
   let dialogsElements = props.state.dialogsData.map((el, index) => {
@@ -15,18 +15,6 @@ const Dialogs = props => {
   let messagesElements = props.state.messagesData.map((el, index) => {
     return <UserMessages messages={el.message} />;
   });
-
-  //Иниц ссылки
-  // let newRef = React.createRef();
-
-  // let addMessage = () => {
-  //   props.dispatch(addMessageActionCreator());
-  // };
-
-  // let messageOnChange = () => {
-  //   let text = newRef.current.value;
-  //   props.dispatch(updateNewMessageTextActionCreator(text));
-  // };
 
   let addMessage = () => {
     props.dispatch(addMessageActionCreator());
@@ -42,16 +30,13 @@ const Dialogs = props => {
       <div className={styles.usersName}>{dialogsElements}</div>
       <div className={styles.messages}>{messagesElements}</div>
       <div>
-        {/* привязка textarea к ссылке */}
         <textarea
           onChange={messageOnChange}
-          // ref={newRef}
           placeholder="Введите текст"
           value={props.state.newMessageText}
         ></textarea>
       </div>
       <div>
-        {/*клик мышки вызывает addMessage */}
         <button onClick={addMessage}>Add message</button>
       </div>
     </div>
