@@ -17,14 +17,23 @@ const Dialogs = props => {
   });
 
   //Иниц ссылки
-  let newRef = React.createRef();
+  // let newRef = React.createRef();
+
+  // let addMessage = () => {
+  //   props.dispatch(addMessageActionCreator());
+  // };
+
+  // let messageOnChange = () => {
+  //   let text = newRef.current.value;
+  //   props.dispatch(updateNewMessageTextActionCreator(text));
+  // };
 
   let addMessage = () => {
     props.dispatch(addMessageActionCreator());
   };
 
-  let messageOnChange = () => {
-    let text = newRef.current.value;
+  let messageOnChange = e => {
+    let text = e.target.value;
     props.dispatch(updateNewMessageTextActionCreator(text));
   };
 
@@ -36,7 +45,8 @@ const Dialogs = props => {
         {/* привязка textarea к ссылке */}
         <textarea
           onChange={messageOnChange}
-          ref={newRef}
+          // ref={newRef}
+          placeholder="Введите текст"
           value={props.state.newMessageText}
         ></textarea>
       </div>
