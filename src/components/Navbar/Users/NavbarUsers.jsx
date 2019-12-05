@@ -3,7 +3,8 @@ import styles from "./../Navbar.module.css";
 import OnlineUser from "./OnlineUser";
 
 const NavbarUsers = props => {
-  let onlineUserList = props.user.map((el, index) => {
+  let state = props.store.getState();
+  let onlineUserList = state.sidebar.user.map((el, index) => {
     if (index < 3) {
       return <OnlineUser name={el.name} />;
     }

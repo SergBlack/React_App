@@ -1,22 +1,18 @@
 import React from "react";
 import styles from "./Profile.module.css";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import MyPosts from "./MyPosts/MyPosts";
-
-import ozera from "../../images/ozera.jpg";
+// import MyPosts from "./MyPosts/MyPosts";
+import MyPostsContainer from "./MyPosts/MyPostsContainer";
+import lakes from "../../images/ozera.jpg";
 
 const Profile = props => {
   return (
     <div>
       <div>
-        <img className={styles.img} src={ozera} alt="something..." />
+        <img className={styles.img} src={lakes} alt="something..." />
       </div>
       <ProfileInfo />
-      <MyPosts
-        posts={props.state.postsData}
-        newPostText={props.state.newPostText}
-        dispatch={props.dispatch}
-      />
+      <MyPostsContainer store={props.store} />
     </div>
   );
 };
