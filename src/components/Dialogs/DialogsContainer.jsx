@@ -12,8 +12,7 @@ let DialogsContainer = props => {
   };
 
   let messageOnChange = text => {
-    let action = updateNewMessageTextActionCreator(text);
-    props.store.dispatch(action);
+    props.store.dispatch(updateNewMessageTextActionCreator(text));
   };
   return (
     <Dialogs
