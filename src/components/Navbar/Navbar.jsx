@@ -32,7 +32,7 @@ const Navbar = props => {
         </NavLink>
       </div>
       <div className={styles.navbarFriends}>
-        <NavbarUsers user={props.state.user} />
+        <NavbarUsers user={props.state} />
       </div>
     </nav>
   );
