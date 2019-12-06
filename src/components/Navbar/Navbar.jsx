@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Navbar.module.css";
 import { NavLink } from "react-router-dom";
-import NavbarUsers from "./Users/NavbarUsers";
+import NavbarUsersContainer from "./Users/NavbarUsersContainer";
 
 const Navbar = props => {
   return (
@@ -32,7 +32,7 @@ const Navbar = props => {
         </NavLink>
       </div>
       <div className={styles.navbarFriends}>
-        <NavbarUsers store={props.store} />
+        <NavbarUsersContainer />
       </div>
     </nav>
   );
