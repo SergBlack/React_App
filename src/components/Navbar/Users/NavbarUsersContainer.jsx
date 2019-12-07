@@ -1,4 +1,3 @@
-import React from "react";
 import NavbarUsers from "./NavbarUsers";
 import { connect } from "react-redux";
 

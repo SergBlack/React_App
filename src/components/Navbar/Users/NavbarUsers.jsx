@@ -7,6 +7,7 @@ const NavbarUsers = props => {
     if (index < 3) {
       return <OnlineUser name={el.name} />;
     }
+    return null;
   });
   return (
     <div>
