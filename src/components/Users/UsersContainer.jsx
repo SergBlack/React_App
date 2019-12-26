@@ -4,7 +4,8 @@ import {
   followAC,
   unfollowAC,
   setUsersAC,
-  setPageAC
+  setPageAC,
+  setTotalUsersCountAC
 } from "../../Redux/users-reducer";
 
 let mapStateToProps = state => {
@@ -29,6 +30,9 @@ let mapDispatchToProps = dispatch => {
     },
     setPage: page => {
       dispatch(setPageAC(page));
+    },
+    setTotalUsersCount: usersNumber => {
+      dispatch(setTotalUsersCountAC(usersNumber));
     }
   };
 };

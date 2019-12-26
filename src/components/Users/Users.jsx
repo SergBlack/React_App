@@ -12,6 +12,7 @@ class Users extends React.Component {
         )
         .then(response => {
           this.props.setUsers(response.data.items);
+          this.props.setTotalUsersCount(response.data.totalCount);
         });
     }
   }
@@ -20,6 +21,7 @@ class Users extends React.Component {
     let pagesCount = Math.ceil(
       this.props.totalUsersCount / this.props.pageUsersCount
     );
+    console.log(pagesCount);
 
     let pages = [];
     for (let i = 1; i <= pagesCount; i++) {
