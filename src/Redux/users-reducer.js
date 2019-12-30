@@ -3,12 +3,14 @@ const UNFOLLOW = "UNFOLLOW";
 const SET_USERS = "SET_USERS";
 const SET_PAGE = "SET_PAGE";
 const SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT";
+const IN_PROGRESS = "IN_PROGRESS";
 
 let initialState = {
   users: [],
   pageUsersCount: 5,
   totalUsersCount: 0,
-  currentPage: 1
+  currentPage: 1,
+  inProgress: false
 };
 const usersReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -38,6 +40,9 @@ const usersReducer = (state = initialState, action) => {
       return { ...state, currentPage: action.currentPage };
     case SET_TOTAL_USERS_COUNT:
       return { ...state, totalUsersCount: action.count };
+    case IN_PROGRESS:
+      debugger;
+      return { ...state, inProgress: action.inProgress };
     default:
       return state;
   }
@@ -51,5 +56,6 @@ export const setTotalUsersCountAC = totalCount => ({
   type: SET_TOTAL_USERS_COUNT,
   count: totalCount
 });
+export const inProgressAC = inProgress => ({ type: IN_PROGRESS, inProgress });
 
 export default usersReducer;

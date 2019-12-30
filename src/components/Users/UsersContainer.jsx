@@ -7,8 +7,10 @@ import {
   unfollowAC,
   setUsersAC,
   setPageAC,
-  setTotalUsersCountAC
+  setTotalUsersCountAC,
+  inProgressAC
 } from "../../Redux/users-reducer";
+import preloader from "../../images/preloader.svg";
 
 class UsersContainer extends React.Component {
   componentDidMount() {
@@ -26,26 +28,31 @@ class UsersContainer extends React.Component {
 
   onPageChanged = pageNumber => {
     this.props.setPage(pageNumber);
+    this.props.inProgress(true);
     axios
       .get(
         `https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageUsersCount}`
       )
       .then(response => {
         this.props.setUsers(response.data.items);
+        this.props.inProgress(false);
       });
   };
 
   render() {
     return (
-      <Users
-        users={this.props.users}
-        totalUsersCount={this.props.totalUsersCount}
-        pageUsersCount={this.props.pageUsersCount}
-        currentPage={this.props.currentPage}
-        onPageChanged={this.onPageChanged}
-        unfollow={this.props.unfollow}
-        follow={this.props.follow}
-      />
+      <>
+        {this.props.inProgress ? <img src={preloader} /> : null}
+        <Users
+          users={this.props.users}
+          totalUsersCount={this.props.totalUsersCount}
+          pageUsersCount={this.props.pageUsersCount}
+          currentPage={this.props.currentPage}
+          onPageChanged={this.onPageChanged}
+          unfollow={this.props.unfollow}
+          follow={this.props.follow}
+        />
+      </>
     );
   }
 }
@@ -55,7 +62,8 @@ let mapStateToProps = state => {
     users: state.usersPage.users,
     pageUsersCount: state.usersPage.pageUsersCount,
     totalUsersCount: state.usersPage.totalUsersCount,
-    currentPage: state.usersPage.currentPage
+    currentPage: state.usersPage.currentPage,
+    inProgress: state.usersPage.inProgress
   };
 };
 
@@ -75,6 +83,9 @@ let mapDispatchToProps = dispatch => {
     },
     setTotalUsersCount: totalCount => {
       dispatch(setTotalUsersCountAC(totalCount));
+    },
+    inProgress: loading => {
+      dispatch(inProgressAC(loading));
     }
   };
 };
