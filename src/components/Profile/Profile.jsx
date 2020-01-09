@@ -1,16 +1,12 @@
 import React from "react";
-import styles from "./Profile.module.css";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
-import lakes from "../../images/ozera.jpg";
 
 const Profile = props => {
+  // debugger;
   return (
     <div>
-      <div>
-        <img className={styles.img} src={lakes} alt="something..." />
-      </div>
-      <ProfileInfo />
+      <ProfileInfo profile={props.profile} />
       <MyPostsContainer />
     </div>
   );
