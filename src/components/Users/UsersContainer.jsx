@@ -3,17 +3,18 @@ import { connect } from "react-redux";
 import * as axios from "axios";
 import Users from "./Users";
 import {
-  followAC,
-  unfollowAC,
-  setUsersAC,
-  setPageAC,
-  setTotalUsersCountAC,
-  inProgressAC
+  follow,
+  unfollow,
+  setUsers,
+  setPage,
+  setTotalUsersCount,
+  isLoadingInProgress
 } from "../../Redux/users-reducer";
-import preloader from "../../images/preloader.svg";
+import Preloader from "../Common/Preloader/Preloader";
 
 class UsersContainer extends React.Component {
   componentDidMount() {
+    this.props.isLoadingInProgress(true);
     // if (this.props.users.length === 0) {
     axios
       .get(
@@ -22,27 +23,28 @@ class UsersContainer extends React.Component {
       .then(response => {
         this.props.setUsers(response.data.items);
         this.props.setTotalUsersCount(response.data.totalCount);
+        this.props.isLoadingInProgress(false);
       });
     // }
   }
 
   onPageChanged = pageNumber => {
     this.props.setPage(pageNumber);
-    this.props.inProgress(true);
+    this.props.isLoadingInProgress(true);
     axios
       .get(
         `https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageUsersCount}`
       )
       .then(response => {
         this.props.setUsers(response.data.items);
-        this.props.inProgress(false);
+        this.props.isLoadingInProgress(false);
       });
   };
 
   render() {
     return (
       <>
-        {this.props.inProgress ? <img src={preloader} /> : null}
+        <Preloader isLoading={this.props.isLoading} />
         <Users
           users={this.props.users}
           totalUsersCount={this.props.totalUsersCount}
@@ -63,31 +65,15 @@ let mapStateToProps = state => {
     pageUsersCount: state.usersPage.pageUsersCount,
     totalUsersCount: state.usersPage.totalUsersCount,
     currentPage: state.usersPage.currentPage,
-    inProgress: state.usersPage.inProgress
+    isLoading: state.usersPage.isLoading
   };
 };
 
-let mapDispatchToProps = dispatch => {
-  return {
-    follow: userId => {
-      dispatch(followAC(userId));
-    },
-    unfollow: userId => {
-      dispatch(unfollowAC(userId));
-    },
-    setUsers: users => {
-      dispatch(setUsersAC(users));
-    },
-    setPage: page => {
-      dispatch(setPageAC(page));
-    },
-    setTotalUsersCount: totalCount => {
-      dispatch(setTotalUsersCountAC(totalCount));
-    },
-    inProgress: loading => {
-      dispatch(inProgressAC(loading));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+export default connect(mapStateToProps, {
+  follow,
+  unfollow,
+  setUsers,
+  setPage,
+  setTotalUsersCount,
+  isLoadingInProgress
+})(UsersContainer);
