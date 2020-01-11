@@ -37,7 +37,7 @@ const ProfileInfo = props => {
         <div>
           Photos:{" "}
           <div>
-            <img src={props.profile.photos.large} alt="User photo" />
+            <img src={props.profile.photos.large} alt="avatar" />
           </div>
         </div>
       </div>
