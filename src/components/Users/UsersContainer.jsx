@@ -15,17 +15,16 @@ import Preloader from "../Common/Preloader/Preloader";
 class UsersContainer extends React.Component {
   componentDidMount() {
     this.props.isLoadingInProgress(true);
-    // if (this.props.users.length === 0) {
     axios
       .get(
-        `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageUsersCount}`
+        `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageUsersCount}`,
+        { withCredentials: true }
       )
       .then(response => {
         this.props.setUsers(response.data.items);
         this.props.setTotalUsersCount(response.data.totalCount);
         this.props.isLoadingInProgress(false);
       });
-    // }
   }
 
   onPageChanged = pageNumber => {
@@ -33,7 +32,8 @@ class UsersContainer extends React.Component {
     this.props.isLoadingInProgress(true);
     axios
       .get(
-        `https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageUsersCount}`
+        `https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageUsersCount}`,
+        { withCredentials: true }
       )
       .then(response => {
         this.props.setUsers(response.data.items);
