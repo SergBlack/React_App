@@ -7,3 +7,8 @@
   width: 100px;
   border: 1px solid rgba(27, 190, 190, 0.8);
 }
+
+.header .authLogin {
+  float: right;
+  color: white;
+}
