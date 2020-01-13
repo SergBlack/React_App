@@ -48,7 +48,7 @@ const Users = props => {
                         {
                           withCredentials: true,
                           headers: {
-                            API_KEY: "23cccf25-43e1-4092-be00-34c7dedf057c"
+                            API_KEY: "0d41121f-2478-4b6c-b97e-27aac409dbbd"
                           }
                         }
                       )
@@ -68,7 +68,12 @@ const Users = props => {
                       .post(
                         `https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,
                         {},
-                        { withCredentials: true }
+                        {
+                          withCredentials: true,
+                          headers: {
+                            API_KEY: "0d41121f-2478-4b6c-b97e-27aac409dbbd"
+                          }
+                        }
                       )
                       .then(response => {
                         props.follow(u.id);
