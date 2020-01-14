@@ -24,14 +24,14 @@ const ProfileInfo = props => {
         <div>
           <ul>
             Contacts:
-            <li>{`Github: ${props.profile.github}`}</li>
-            <li>{`VK: ${props.profile.vk}`}</li>
-            <li>{`Facebook: ${props.profile.fcebook}`}</li>
-            <li>{`Instagram: ${props.profile.instagram}`}</li>
-            <li>{`Twitter: ${props.profile.twitter}`}</li>
-            <li>{`Website: ${props.profile.website}`}</li>
-            <li>{`Youtube: ${props.profile.youtube}`}</li>
-            <li>{`MainLink: ${props.profile.mainLink}`}</li>
+            <li>{`Github: ${props.profile.contacts.github}`}</li>
+            <li>{`VK: ${props.profile.contacts.vk}`}</li>
+            <li>{`Facebook: ${props.profile.contacts.facebook}`}</li>
+            <li>{`Instagram: ${props.profile.contacts.instagram}`}</li>
+            <li>{`Twitter: ${props.profile.contacts.twitter}`}</li>
+            <li>{`Website: ${props.profile.contacts.website}`}</li>
+            <li>{`Youtube: ${props.profile.contacts.youtube}`}</li>
+            <li>{`MainLink: ${props.profile.contacts.mainLink}`}</li>
           </ul>
         </div>
         <div>

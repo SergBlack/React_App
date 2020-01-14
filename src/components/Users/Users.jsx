@@ -48,7 +48,7 @@ const Users = props => {
                         {
                           withCredentials: true,
                           headers: {
-                            API_KEY: "0d41121f-2478-4b6c-b97e-27aac409dbbd"
+                            "API-KEY": "72a823d7-94b2-4ecd-891f-657d921d168c"
                           }
                         }
                       )
@@ -71,12 +71,14 @@ const Users = props => {
                         {
                           withCredentials: true,
                           headers: {
-                            API_KEY: "0d41121f-2478-4b6c-b97e-27aac409dbbd"
+                            "API-KEY": "72a823d7-94b2-4ecd-891f-657d921d168c"
                           }
                         }
                       )
                       .then(response => {
-                        props.follow(u.id);
+                        if (response.data.resultCode === 0) {
+                          props.follow(u.id);
+                        }
                       });
                   }}
                 >
