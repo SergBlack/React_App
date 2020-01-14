@@ -6,3 +6,9 @@
 .selected {
   font-weight: bold;
 }
+
+.userBox {
+  border: 1px solid black;
+  margin-top: 10px;
+  background-color: rgb(161, 123, 65);
+}

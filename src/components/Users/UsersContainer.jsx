@@ -11,18 +11,16 @@ import {
   isLoadingInProgress
 } from "../../Redux/users-reducer";
 import Preloader from "../Common/Preloader/Preloader";
+import { userAPI } from "../../api/api";
 
 class UsersContainer extends React.Component {
   componentDidMount() {
     this.props.isLoadingInProgress(true);
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageUsersCount}`,
-        { withCredentials: true }
-      )
-      .then(response => {
-        this.props.setUsers(response.data.items);
-        this.props.setTotalUsersCount(response.data.totalCount);
+    userAPI
+      .getUsers(this.props.currentPage, this.props.pageUsersCount)
+      .then(data => {
+        this.props.setUsers(data.items);
+        this.props.setTotalUsersCount(data.totalCount);
         this.props.isLoadingInProgress(false);
       });
   }
@@ -30,15 +28,10 @@ class UsersContainer extends React.Component {
   onPageChanged = pageNumber => {
     this.props.setPage(pageNumber);
     this.props.isLoadingInProgress(true);
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageUsersCount}`,
-        { withCredentials: true }
-      )
-      .then(response => {
-        this.props.setUsers(response.data.items);
-        this.props.isLoadingInProgress(false);
-      });
+    userAPI.getUsers(pageNumber, this.props.pageUsersCount).then(data => {
+      this.props.setUsers(data.items);
+      this.props.isLoadingInProgress(false);
+    });
   };
 
   render() {

@@ -27,7 +27,7 @@ const Users = props => {
         })}
       </div>
       {props.users.map(u => (
-        <div key={u.id}>
+        <div key={u.id} className={styles.userBox}>
           <span>
             <div>
               <NavLink to={`/profile/${u.id}`}>
@@ -90,7 +90,8 @@ const Users = props => {
           <span>
             <span>
               <div>{u.name}</div>
-              <div>Status: "{u.status}"</div>
+              <div>ID:{u.id}</div>
+              <div>Status: {!u.status ? "Very busy" : u.status}</div>
             </span>
             <span>
               <div>City</div>
