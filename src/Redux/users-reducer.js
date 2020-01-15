@@ -7,7 +7,7 @@ const IS_LOADING_IN_PROGRESS = "IS_LOADING_IN_PROGRESS";
 
 let initialState = {
   users: [],
-  pageUsersCount: 5,
+  pageUsersCount: 10,
   totalUsersCount: 0,
   currentPage: 1,
   isLoading: false
