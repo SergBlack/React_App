@@ -1,3 +1,5 @@
+import { userAPI } from "../api/api";
+
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
 const SET_USERS = "SET_USERS";
@@ -56,8 +58,8 @@ const usersReducer = (state = initialState, action) => {
   }
 };
 
-export const follow = userId => ({ type: FOLLOW, userId });
-export const unfollow = userId => ({ type: UNFOLLOW, userId });
+export const followSuccess = userId => ({ type: FOLLOW, userId });
+export const unfollowSuccess = userId => ({ type: UNFOLLOW, userId });
 export const setUsers = users => ({ type: SET_USERS, users });
 export const setPage = page => ({ type: SET_PAGE, currentPage: page });
 export const setTotalUsersCount = totalCount => ({
@@ -73,5 +75,43 @@ export const followingInProgress = (bool, userId) => ({
   inProgress: bool,
   userId
 });
+
+export const getUsers = (currentPage, pageUsersCount) => dispatch => {
+  dispatch(loadingInProgress(true));
+  userAPI.getUsers(currentPage, pageUsersCount).then(data => {
+    dispatch(setUsers(data.items));
+    dispatch(setTotalUsersCount(data.totalCount));
+    dispatch(loadingInProgress(false));
+  });
+};
+
+export const setCurrentPage = (pageNumber, pageUsersCount) => dispatch => {
+  dispatch(setPage(pageNumber));
+  dispatch(loadingInProgress(true));
+  userAPI.getUsers(pageNumber, pageUsersCount).then(data => {
+    dispatch(setUsers(data.items));
+    dispatch(loadingInProgress(false));
+  });
+};
+
+export const follow = userId => dispatch => {
+  dispatch(followingInProgress(true, userId));
+  userAPI.follow(userId).then(data => {
+    if (data.resultCode === 0) {
+      dispatch(followSuccess(userId));
+    }
+    dispatch(followingInProgress(false, userId));
+  });
+};
+
+export const unfollow = userId => dispatch => {
+  dispatch(followingInProgress(true, userId));
+  userAPI.unfollow(userId).then(data => {
+    if (data.resultCode === 0) {
+      dispatch(unfollowSuccess(userId));
+    }
+    dispatch(followingInProgress(false, userId));
+  });
+};
 
 export default usersReducer;

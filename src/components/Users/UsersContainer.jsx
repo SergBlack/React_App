@@ -1,37 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
 import Users from "./Users";
-import {
-  follow,
-  unfollow,
-  setUsers,
-  setPage,
-  setTotalUsersCount,
-  loadingInProgress,
-  followingInProgress
-} from "../../Redux/users-reducer";
+import { follow, unfollow, getUsers, setCurrentPage } from "../../Redux/users-reducer";
 import Preloader from "../Common/Preloader/Preloader";
-import { userAPI } from "../../api/api";
 
 class UsersContainer extends React.Component {
   componentDidMount() {
-    this.props.loadingInProgress(true);
-    userAPI
-      .getUsers(this.props.currentPage, this.props.pageUsersCount)
-      .then(data => {
-        this.props.setUsers(data.items);
-        this.props.setTotalUsersCount(data.totalCount);
-        this.props.loadingInProgress(false);
-      });
+    this.props.getUsers(this.props.currentPage, this.props.pageUsersCount);
   }
 
   onPageChanged = pageNumber => {
-    this.props.setPage(pageNumber);
-    this.props.loadingInProgress(true);
-    userAPI.getUsers(pageNumber, this.props.pageUsersCount).then(data => {
-      this.props.setUsers(data.items);
-      this.props.loadingInProgress(false);
-    });
+    this.props.setCurrentPage(pageNumber, this.props.pageUsersCount);
   };
 
   render() {
@@ -44,10 +23,9 @@ class UsersContainer extends React.Component {
           pageUsersCount={this.props.pageUsersCount}
           currentPage={this.props.currentPage}
           onPageChanged={this.onPageChanged}
-          unfollow={this.props.unfollow}
           follow={this.props.follow}
+          unfollow={this.props.unfollow}
           followingUserId={this.props.followingUserId}
-          followingInProgress={this.props.followingInProgress}
         />
       </>
     );
@@ -57,8 +35,8 @@ class UsersContainer extends React.Component {
 let mapStateToProps = state => {
   return {
     users: state.usersPage.users,
-    pageUsersCount: state.usersPage.pageUsersCount,
     totalUsersCount: state.usersPage.totalUsersCount,
+    pageUsersCount: state.usersPage.pageUsersCount,
     currentPage: state.usersPage.currentPage,
     isLoading: state.usersPage.isLoading,
     followingUserId: state.usersPage.followingUserId
@@ -68,9 +46,6 @@ let mapStateToProps = state => {
 export default connect(mapStateToProps, {
   follow,
   unfollow,
-  setUsers,
-  setPage,
-  setTotalUsersCount,
-  loadingInProgress,
-  followingInProgress
+  getUsers,
+  setCurrentPage
 })(UsersContainer);
