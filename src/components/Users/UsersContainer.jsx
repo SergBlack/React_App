@@ -7,29 +7,30 @@ import {
   setUsers,
   setPage,
   setTotalUsersCount,
-  isLoadingInProgress
+  loadingInProgress,
+  followingInProgress
 } from "../../Redux/users-reducer";
 import Preloader from "../Common/Preloader/Preloader";
 import { userAPI } from "../../api/api";
 
 class UsersContainer extends React.Component {
   componentDidMount() {
-    this.props.isLoadingInProgress(true);
+    this.props.loadingInProgress(true);
     userAPI
       .getUsers(this.props.currentPage, this.props.pageUsersCount)
       .then(data => {
         this.props.setUsers(data.items);
         this.props.setTotalUsersCount(data.totalCount);
-        this.props.isLoadingInProgress(false);
+        this.props.loadingInProgress(false);
       });
   }
 
   onPageChanged = pageNumber => {
     this.props.setPage(pageNumber);
-    this.props.isLoadingInProgress(true);
+    this.props.loadingInProgress(true);
     userAPI.getUsers(pageNumber, this.props.pageUsersCount).then(data => {
       this.props.setUsers(data.items);
-      this.props.isLoadingInProgress(false);
+      this.props.loadingInProgress(false);
     });
   };
 
@@ -45,6 +46,8 @@ class UsersContainer extends React.Component {
           onPageChanged={this.onPageChanged}
           unfollow={this.props.unfollow}
           follow={this.props.follow}
+          followingUserId={this.props.followingUserId}
+          followingInProgress={this.props.followingInProgress}
         />
       </>
     );
@@ -57,7 +60,8 @@ let mapStateToProps = state => {
     pageUsersCount: state.usersPage.pageUsersCount,
     totalUsersCount: state.usersPage.totalUsersCount,
     currentPage: state.usersPage.currentPage,
-    isLoading: state.usersPage.isLoading
+    isLoading: state.usersPage.isLoading,
+    followingUserId: state.usersPage.followingUserId
   };
 };
 
@@ -67,5 +71,6 @@ export default connect(mapStateToProps, {
   setUsers,
   setPage,
   setTotalUsersCount,
-  isLoadingInProgress
+  loadingInProgress,
+  followingInProgress
 })(UsersContainer);

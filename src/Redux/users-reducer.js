@@ -3,14 +3,16 @@ const UNFOLLOW = "UNFOLLOW";
 const SET_USERS = "SET_USERS";
 const SET_PAGE = "SET_PAGE";
 const SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT";
-const IS_LOADING_IN_PROGRESS = "IS_LOADING_IN_PROGRESS";
+const LOADING_IN_PROGRESS = "IS_LOADING_IN_PROGRESS";
+const FOLLOWING_IN_PROGRESS = "FOLLOWING_IN_PROGRESS";
 
 let initialState = {
   users: [],
   pageUsersCount: 10,
   totalUsersCount: 0,
   currentPage: 1,
-  isLoading: false
+  isLoading: false,
+  followingUserId: []
 };
 const usersReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -40,8 +42,15 @@ const usersReducer = (state = initialState, action) => {
       return { ...state, currentPage: action.currentPage };
     case SET_TOTAL_USERS_COUNT:
       return { ...state, totalUsersCount: action.count };
-    case IS_LOADING_IN_PROGRESS:
+    case LOADING_IN_PROGRESS:
       return { ...state, isLoading: action.inProgress };
+    case FOLLOWING_IN_PROGRESS:
+      return {
+        ...state,
+        followingUserId: action.inProgress
+          ? [...state.followingUserId, action.userId]
+          : [...state.followingUserId.filter(id => id !== action.userId)]
+      };
     default:
       return state;
   }
@@ -55,9 +64,14 @@ export const setTotalUsersCount = totalCount => ({
   type: SET_TOTAL_USERS_COUNT,
   count: totalCount
 });
-export const isLoadingInProgress = bool => ({
-  type: IS_LOADING_IN_PROGRESS,
+export const loadingInProgress = bool => ({
+  type: LOADING_IN_PROGRESS,
   inProgress: bool
+});
+export const followingInProgress = (bool, userId) => ({
+  type: FOLLOWING_IN_PROGRESS,
+  inProgress: bool,
+  userId
 });
 
 export default usersReducer;
