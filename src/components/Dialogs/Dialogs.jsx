@@ -2,6 +2,8 @@ import React from "react";
 import styles from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import UserMessages from "./UserMessages/UserMessages";
+import { Redirect } from "react-router-dom";
+import LoginHOC from "../HOC/LoginHOC";
 
 const Dialogs = props => {
   let dialogsElements = props.dialogsData.map((el, index) => {
@@ -21,16 +23,14 @@ const Dialogs = props => {
     props.messageOnChange(text);
   };
 
+  // if (!props.isAuth) return <Redirect to={"/login"} />;
+
   return (
     <div className={styles.dialogs}>
       <div className={styles.usersName}>{dialogsElements}</div>
       <div className={styles.messages}>{messagesElements}</div>
       <div>
-        <textarea
-          onChange={messageOnChange}
-          placeholder="Введите текст"
-          value={props.newMessageText}
-        ></textarea>
+        <textarea onChange={messageOnChange} placeholder="Введите текст" value={props.newMessageText}></textarea>
       </div>
       <div>
         <button onClick={addMessage}>Add message</button>
