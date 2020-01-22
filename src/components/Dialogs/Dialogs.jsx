@@ -2,8 +2,6 @@ import React from "react";
 import styles from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import UserMessages from "./UserMessages/UserMessages";
-import { Redirect } from "react-router-dom";
-import LoginHOC from "../HOC/LoginHOC";
 
 const Dialogs = props => {
   let dialogsElements = props.dialogsData.map((el, index) => {
