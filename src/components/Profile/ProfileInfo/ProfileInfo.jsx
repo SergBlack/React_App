@@ -1,8 +1,10 @@
 import React from "react";
 import styles from "./ProfileInfo.module.css";
 import lakes from "../../../images/ozera.jpg";
+import ProfileStatus from "./ProfileStatus";
 
 const ProfileInfo = props => {
+  debugger;
   if (!props.profile) {
     return <></>;
   }
@@ -20,6 +22,7 @@ const ProfileInfo = props => {
         <div>{`User ID: ${props.profile.userId}`}</div>
         <div>{`Name: ${props.profile.fullName}`}</div>
         <div>{`Looking for a job: ${props.profile.lookingForAJob}`}</div>
+        <ProfileStatus status={"Yoyo"} />
         <div>{`Description Job: ${props.profile.lookingForAJobDescription}`}</div>
         <div>
           <ul>
