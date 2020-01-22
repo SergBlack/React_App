@@ -4,7 +4,6 @@ import lakes from "../../../images/ozera.jpg";
 import ProfileStatus from "./ProfileStatus";
 
 const ProfileInfo = props => {
-  debugger;
   if (!props.profile) {
     return <></>;
   }
@@ -14,11 +13,7 @@ const ProfileInfo = props => {
         <img className={styles.img} src={lakes} alt="something..." />
       </div>
       <div className={styles.descriptionBlock}>
-        <img
-          className={styles.ava}
-          src={props.profile.photos.small}
-          alt="User avatar"
-        />
+        <img className={styles.ava} src={props.profile.photos.small} alt="User avatar" />
         <div>{`User ID: ${props.profile.userId}`}</div>
         <div>{`Name: ${props.profile.fullName}`}</div>
         <div>{`Looking for a job: ${props.profile.lookingForAJob}`}</div>
