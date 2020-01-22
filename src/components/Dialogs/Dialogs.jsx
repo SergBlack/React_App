@@ -23,14 +23,16 @@ const Dialogs = props => {
     props.messageOnChange(text);
   };
 
-  // if (!props.isAuth) return <Redirect to={"/login"} />;
-
   return (
     <div className={styles.dialogs}>
       <div className={styles.usersName}>{dialogsElements}</div>
       <div className={styles.messages}>{messagesElements}</div>
       <div>
-        <textarea onChange={messageOnChange} placeholder="Введите текст" value={props.newMessageText}></textarea>
+        <textarea
+          onChange={messageOnChange}
+          placeholder="Введите текст"
+          value={props.newMessageText}
+        ></textarea>
       </div>
       <div>
         <button onClick={addMessage}>Add message</button>
