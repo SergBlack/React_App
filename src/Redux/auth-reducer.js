@@ -1,6 +1,6 @@
-import { authAPI } from "../api/api";
+import { authAPI } from '../api/api';
 
-const SET_USER_DATA = "SET_USER_DATA";
+const SET_USER_DATA = 'SET_USER_DATA';
 let initialState = {
   userId: null,
   email: null,
@@ -27,10 +27,21 @@ export const setAuthUserData = (userId, email, login) => ({
   data: { userId, email, login }
 });
 
-export const getAuthUserData = () => dispatch => {
-  authAPI.getAuth().then(data => {
+// export const getAuthUserData = () => dispatch => {
+//   authAPI.getAuth().then(data => {
+//     if (data.resultCode === 0) {
+//       let { id, login, email } = data.data;
+//       dispatch(setAuthUserData(id, email, login));
+//     }
+//   });
+// };
+
+let credentials = {};
+
+export const loginThunk = (id, email, login) => dispatch => {
+  authAPI.login().then(data => {
     if (data.resultCode === 0) {
-      let { id, login, email } = data.data;
+      let id = data.userId;
       dispatch(setAuthUserData(id, email, login));
     }
   });
