@@ -1,7 +1,8 @@
-import React from "react";
-import logo from "../../images/logo.png";
-import styles from "./Header.module.css";
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import logo from '../../images/logo.png';
+import styles from './Header.module.css';
+import { NavLink } from 'react-router-dom';
+import Logout from './../Login/Logout';
 
 const Header = props => {
   return (
@@ -12,7 +13,14 @@ const Header = props => {
       </h1>
 
       <div className={styles.authLogin}>
-        {props.isAuth ? props.login : <NavLink to={"/login"}>Login</NavLink>}
+        {props.isAuth ? (
+          <div>
+            <div>{props.email}</div>
+            <Logout />
+          </div>
+        ) : (
+          <NavLink to={'/login'}>Login</NavLink>
+        )}
       </div>
     </header>
   );

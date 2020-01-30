@@ -1,19 +1,31 @@
-import React from "react";
-import { Field, reduxForm } from "redux-form";
-import { connect } from "react-redux";
-import { loginThunk } from "../../Redux/auth-reducer";
+import React from 'react';
+import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
+import { loginThunk } from '../../Redux/auth-reducer';
+import Logout from './Logout';
 
 const LoginForm = props => {
   return (
     <form onSubmit={props.handleSubmit}>
+      <h1>Login</h1>
       <div>
-        <Field name={"email"} component="input" placeholder={"Login"} type={"text"} />
+        <Field
+          name={'email'}
+          component="input"
+          placeholder={'Login'}
+          type={'text'}
+        />
       </div>
       <div>
-        <Field name={"password"} component="input" placeholder={"Password"} type={"text"} />
+        <Field
+          name={'password'}
+          component="input"
+          placeholder={'Password'}
+          type={'text'}
+        />
       </div>
       <div>
-        <Field name={"rememberMe"} component="input" type={"checkbox"} />
+        <Field name={'rememberMe'} component="input" type={'checkbox'} />
         Remember me
       </div>
       <div>
@@ -24,23 +36,22 @@ const LoginForm = props => {
 };
 
 const LoginReduxForm = reduxForm({
-  form: "login"
+  form: 'login'
 })(LoginForm);
 
 const Login = props => {
   const onSubmit = formData => {
-    let { email, password, rememberMe } = { ...formData };
-    props.loginThunk(email, password, rememberMe);
-    console.log(formData);
+    props.loginThunk({ ...formData });
   };
   return (
     <div>
-      <h1>Login</h1>
-      <LoginReduxForm onSubmit={onSubmit} />
+      {props.isAuth ? <Logout /> : <LoginReduxForm onSubmit={onSubmit} />}
     </div>
   );
 };
 
-const mapStateToProps = () => {};
+const mapStateToProps = state => ({
+  isAuth: state.auth.isAuth
+});
 
 export default connect(mapStateToProps, { loginThunk })(Login);

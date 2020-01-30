@@ -1,6 +1,8 @@
-import { authAPI } from "../api/api";
+import { authAPI } from '../api/api';
 
-const SET_USER_DATA = "SET_USER_DATA";
+const SET_USER_DATA = 'SET_USER_DATA';
+const REMOVE_USER_DATA = 'REMOVE_USER_DATA';
+
 let initialState = {
   userId: null,
   email: null,
@@ -14,7 +16,16 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         userId: action.userId,
+        email: action.email,
         isAuth: true
+      };
+    }
+    case REMOVE_USER_DATA: {
+      return {
+        ...state,
+        userId: null,
+        email: null,
+        isAuth: false
       };
     }
     default:
@@ -22,16 +33,32 @@ const authReducer = (state = initialState, action) => {
   }
 };
 
-export const setAuthUserData = userId => ({
+const setAuthUserData = (userId, email) => ({
   type: SET_USER_DATA,
-  userId: userId
+  userId: userId,
+  email: email
 });
 
-export const loginThunk = (email, password, rememberMe) => dispatch => {
-  authAPI.login(email, password, rememberMe).then(data => {
-    if (data.resultCode === 0) {
-      dispatch(setAuthUserData(data.userId));
+const removeAuthUserData = () => {
+  return {
+    type: REMOVE_USER_DATA
+  };
+};
+
+export const loginThunk = ({ email, password, rememberMe }) => dispatch => {
+  authAPI.login(email, password, rememberMe).then(response => {
+    if (response.resultCode === 0) {
+      dispatch(setAuthUserData(response.data.userId, email));
     }
   });
 };
+
+export const logoutThunk = () => dispatch => {
+  authAPI.logout().then(response => {
+    if (response.resultCode === 0) {
+      dispatch(removeAuthUserData());
+    }
+  });
+};
+
 export default authReducer;
