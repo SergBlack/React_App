@@ -1,7 +1,11 @@
-import React from 'react';
-import styles from './MyPosts.module.css';
-import Post from './Post/Post';
-import { Field, reduxForm } from 'redux-form';
+import React from "react";
+import styles from "./MyPosts.module.css";
+import Post from "./Post/Post";
+import { Field, reduxForm } from "redux-form";
+import { maxLength } from "../../Utilities/validators";
+import { Textarea } from "../../Common/FormControls/Textarea";
+
+const maxLength200 = maxLength(200);
 
 const MyPosts = props => {
   let postsElements = props.posts.map((el, index) => {
@@ -25,12 +29,7 @@ const PostForm = props => {
   return (
     <form onSubmit={props.handleSubmit}>
       <div>
-        <Field
-          name={'addPost'}
-          component={'textarea'}
-          type={'text'}
-          placeholder={'Введите текст'}
-        />
+        <Field name={"addPost"} component={Textarea} type={"text"} placeholder={"Введите текст"} validate={[maxLength200]} />
       </div>
       <div>
         <button>Add post</button>
@@ -39,6 +38,6 @@ const PostForm = props => {
   );
 };
 
-const PostReduxForm = reduxForm({ form: 'addPost' })(PostForm);
+const PostReduxForm = reduxForm({ form: "addPost" })(PostForm);
 
 export default MyPosts;

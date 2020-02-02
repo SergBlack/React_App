@@ -1,13 +1,17 @@
-import { authAPI } from '../api/api';
+import { authAPI } from "../api/api";
 
-const SET_USER_DATA = 'SET_USER_DATA';
-const REMOVE_USER_DATA = 'REMOVE_USER_DATA';
+const SET_USER_DATA = "SET_USER_DATA";
+const REMOVE_USER_DATA = "REMOVE_USER_DATA";
+const THROW_AUTH_ERROR = "THROW_AUTH_ERROR";
+const SET_URL_CAPTCHA = "SET_URL_CAPTCHA";
 
 let initialState = {
   userId: null,
   email: null,
   login: null,
-  isAuth: false
+  isAuth: false,
+  error: false,
+  captchaUrl: null
 };
 
 const authReducer = (state = initialState, action) => {
@@ -17,7 +21,9 @@ const authReducer = (state = initialState, action) => {
         ...state,
         userId: action.userId,
         email: action.email,
-        isAuth: true
+        isAuth: true,
+        error: false,
+        captchaUrl: null
       };
     }
     case REMOVE_USER_DATA: {
@@ -25,7 +31,20 @@ const authReducer = (state = initialState, action) => {
         ...state,
         userId: null,
         email: null,
-        isAuth: false
+        isAuth: false,
+        captchaUrl: null
+      };
+    }
+    case THROW_AUTH_ERROR: {
+      return {
+        ...state,
+        error: true
+      };
+    }
+    case SET_URL_CAPTCHA: {
+      return {
+        ...state,
+        captchaUrl: action.captchaUrl
       };
     }
     default:
@@ -45,10 +64,31 @@ const removeAuthUserData = () => {
   };
 };
 
-export const loginThunk = ({ email, password, rememberMe }) => dispatch => {
-  authAPI.login(email, password, rememberMe).then(response => {
+export const throwAuthError = () => {
+  return {
+    type: THROW_AUTH_ERROR
+  };
+};
+
+export const setUrlCaptcha = url => {
+  return {
+    type: SET_URL_CAPTCHA,
+    captchaUrl: url
+  };
+};
+
+export const loginThunk = ({ email, password, rememberMe, captcha }) => dispatch => {
+  authAPI.login(email, password, rememberMe, captcha).then(response => {
     if (response.resultCode === 0) {
       dispatch(setAuthUserData(response.data.userId, email));
+    }
+    if (response.resultCode === 1) {
+      dispatch(throwAuthError());
+    }
+    if (response.resultCode === 10) {
+      authAPI.getCaptchaUrl().then(response => {
+        dispatch(setUrlCaptcha(response.url));
+      });
     }
   });
 };

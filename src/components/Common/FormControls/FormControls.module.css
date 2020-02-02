@@ -1,0 +1,18 @@
+span.error {
+  color: rgb(184, 18, 18);
+}
+
+span.warning {
+  color: rgb(184, 18, 18);
+}
+
+.input {
+  border: 2px solid rgb(184, 18, 18);
+}
+label {
+  width: 100px;
+  margin-top: 3px;
+  display: inline-block;
+  padding: 3px;
+  font-weight: bold;
+}
