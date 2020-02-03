@@ -4,6 +4,7 @@ const SET_USER_DATA = 'SET_USER_DATA';
 const REMOVE_USER_DATA = 'REMOVE_USER_DATA';
 const THROW_AUTH_ERROR = 'THROW_AUTH_ERROR';
 const SET_URL_CAPTCHA = 'SET_URL_CAPTCHA';
+const REQUEST_IN_PROCESS = 'REQUEST_IN_PROCESS';
 
 let initialState = {
   userId: null,
@@ -11,7 +12,8 @@ let initialState = {
   login: null,
   isAuth: false,
   error: false,
-  captchaUrl: null
+  captchaUrl: null,
+  requestInProcess: false
 };
 
 const authReducer = (state = initialState, action) => {
@@ -40,13 +42,19 @@ const authReducer = (state = initialState, action) => {
     case THROW_AUTH_ERROR: {
       return {
         ...state,
-        error: true
+        error: action.error
       };
     }
     case SET_URL_CAPTCHA: {
       return {
         ...state,
         captchaUrl: action.captchaUrl
+      };
+    }
+    case REQUEST_IN_PROCESS: {
+      return {
+        ...state,
+        requestInProcess: action.requestInProcess
       };
     }
     default:
@@ -67,16 +75,24 @@ const removeAuthUserData = () => {
   };
 };
 
-export const throwAuthError = () => {
+const throwAuthError = bool => {
   return {
-    type: THROW_AUTH_ERROR
+    type: THROW_AUTH_ERROR,
+    error: bool
   };
 };
 
-export const setUrlCaptcha = url => {
+const setUrlCaptcha = url => {
   return {
     type: SET_URL_CAPTCHA,
     captchaUrl: url
+  };
+};
+
+const requestToApiInProcess = bool => {
+  return {
+    type: REQUEST_IN_PROCESS,
+    requestInProcess: bool
   };
 };
 
@@ -87,6 +103,8 @@ export const loginThunk = ({
   captcha
 }) => dispatch => {
   authAPI.login(email, password, rememberMe, captcha).then(response => {
+    dispatch(requestToApiInProcess(true));
+    dispatch(throwAuthError(false));
     if (response.resultCode === 0) {
       authAPI.me().then(response => {
         if (response.resultCode === 0) {
@@ -101,13 +119,14 @@ export const loginThunk = ({
       });
     }
     if (response.resultCode === 1) {
-      dispatch(throwAuthError());
+      dispatch(throwAuthError(true));
     }
     if (response.resultCode === 10) {
       authAPI.getCaptchaUrl().then(response => {
         dispatch(setUrlCaptcha(response.url));
       });
     }
+    dispatch(requestToApiInProcess(false));
   });
 };
 

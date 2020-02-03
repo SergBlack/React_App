@@ -37,21 +37,21 @@ let mapStateToProps = state => {
   };
 };
 
-// export default compose(
-//   connect(mapStateToProps, {
-//     getUserProfile,
-//     getUserStatus,
-//     putUserStatus
-//   }),
-//   withRouter,
-//   withAuthRedirect
-// )(ProfileContainer);
-
 export default compose(
   connect(mapStateToProps, {
     getUserProfile,
     getUserStatus,
     putUserStatus
   }),
-  withRouter
+  withRouter,
+  withAuthRedirect
 )(ProfileContainer);
+
+// export default compose(
+//   connect(mapStateToProps, {
+//     getUserProfile,
+//     getUserStatus,
+//     putUserStatus
+//   }),
+//   withRouter
+// )(ProfileContainer);
