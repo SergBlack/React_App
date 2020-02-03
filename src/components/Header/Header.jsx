@@ -16,6 +16,7 @@ const Header = props => {
         {props.isAuth ? (
           <div>
             <div>{props.email}</div>
+            <div>{props.login}</div>
             <Logout />
           </div>
         ) : (

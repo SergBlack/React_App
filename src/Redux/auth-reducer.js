@@ -1,9 +1,9 @@
-import { authAPI } from "../api/api";
+import { authAPI } from '../api/api';
 
-const SET_USER_DATA = "SET_USER_DATA";
-const REMOVE_USER_DATA = "REMOVE_USER_DATA";
-const THROW_AUTH_ERROR = "THROW_AUTH_ERROR";
-const SET_URL_CAPTCHA = "SET_URL_CAPTCHA";
+const SET_USER_DATA = 'SET_USER_DATA';
+const REMOVE_USER_DATA = 'REMOVE_USER_DATA';
+const THROW_AUTH_ERROR = 'THROW_AUTH_ERROR';
+const SET_URL_CAPTCHA = 'SET_URL_CAPTCHA';
 
 let initialState = {
   userId: null,
@@ -21,6 +21,7 @@ const authReducer = (state = initialState, action) => {
         ...state,
         userId: action.userId,
         email: action.email,
+        login: action.login,
         isAuth: true,
         error: false,
         captchaUrl: null
@@ -31,6 +32,7 @@ const authReducer = (state = initialState, action) => {
         ...state,
         userId: null,
         email: null,
+        login: null,
         isAuth: false,
         captchaUrl: null
       };
@@ -52,10 +54,11 @@ const authReducer = (state = initialState, action) => {
   }
 };
 
-const setAuthUserData = (userId, email) => ({
+const setAuthUserData = (id, email, login) => ({
   type: SET_USER_DATA,
-  userId: userId,
-  email: email
+  userId: id,
+  email: email,
+  login: login
 });
 
 const removeAuthUserData = () => {
@@ -77,10 +80,25 @@ export const setUrlCaptcha = url => {
   };
 };
 
-export const loginThunk = ({ email, password, rememberMe, captcha }) => dispatch => {
+export const loginThunk = ({
+  email,
+  password,
+  rememberMe,
+  captcha
+}) => dispatch => {
   authAPI.login(email, password, rememberMe, captcha).then(response => {
     if (response.resultCode === 0) {
-      dispatch(setAuthUserData(response.data.userId, email));
+      authAPI.me().then(response => {
+        if (response.resultCode === 0) {
+          dispatch(
+            setAuthUserData(
+              response.data.id,
+              response.data.email,
+              response.data.login
+            )
+          );
+        }
+      });
     }
     if (response.resultCode === 1) {
       dispatch(throwAuthError());
