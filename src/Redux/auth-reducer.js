@@ -1,19 +1,16 @@
 import { authAPI } from '../api/api';
+import { stopSubmit } from 'redux-form';
 
 const SET_USER_DATA = 'SET_USER_DATA';
 const REMOVE_USER_DATA = 'REMOVE_USER_DATA';
-const THROW_AUTH_ERROR = 'THROW_AUTH_ERROR';
 const SET_URL_CAPTCHA = 'SET_URL_CAPTCHA';
-const REQUEST_IN_PROCESS = 'REQUEST_IN_PROCESS';
 
 let initialState = {
   userId: null,
   email: null,
   login: null,
   isAuth: false,
-  error: false,
-  captchaUrl: null,
-  requestInProcess: false
+  captchaUrl: null
 };
 
 const authReducer = (state = initialState, action) => {
@@ -25,7 +22,6 @@ const authReducer = (state = initialState, action) => {
         email: action.email,
         login: action.login,
         isAuth: true,
-        error: false,
         captchaUrl: null
       };
     }
@@ -39,22 +35,10 @@ const authReducer = (state = initialState, action) => {
         captchaUrl: null
       };
     }
-    case THROW_AUTH_ERROR: {
-      return {
-        ...state,
-        error: action.error
-      };
-    }
     case SET_URL_CAPTCHA: {
       return {
         ...state,
         captchaUrl: action.captchaUrl
-      };
-    }
-    case REQUEST_IN_PROCESS: {
-      return {
-        ...state,
-        requestInProcess: action.requestInProcess
       };
     }
     default:
@@ -75,13 +59,6 @@ const removeAuthUserData = () => {
   };
 };
 
-const throwAuthError = bool => {
-  return {
-    type: THROW_AUTH_ERROR,
-    error: bool
-  };
-};
-
 const setUrlCaptcha = url => {
   return {
     type: SET_URL_CAPTCHA,
@@ -89,11 +66,18 @@ const setUrlCaptcha = url => {
   };
 };
 
-const requestToApiInProcess = bool => {
-  return {
-    type: REQUEST_IN_PROCESS,
-    requestInProcess: bool
-  };
+export const authMeThunk = () => dispatch => {
+  return authAPI.me().then(response => {
+    if (response.resultCode === 0) {
+      dispatch(
+        setAuthUserData(
+          response.data.id,
+          response.data.email,
+          response.data.login
+        )
+      );
+    }
+  });
 };
 
 export const loginThunk = ({
@@ -103,30 +87,20 @@ export const loginThunk = ({
   captcha
 }) => dispatch => {
   authAPI.login(email, password, rememberMe, captcha).then(response => {
-    dispatch(requestToApiInProcess(true));
-    dispatch(throwAuthError(false));
     if (response.resultCode === 0) {
-      authAPI.me().then(response => {
-        if (response.resultCode === 0) {
-          dispatch(
-            setAuthUserData(
-              response.data.id,
-              response.data.email,
-              response.data.login
-            )
-          );
-        }
-      });
+      dispatch(authMeThunk());
     }
     if (response.resultCode === 1) {
-      dispatch(throwAuthError(true));
+      if (response.messages.length > 0) {
+        const message = 'Invalid login or password';
+        dispatch(stopSubmit('login', { _error: message }));
+      }
     }
     if (response.resultCode === 10) {
       authAPI.getCaptchaUrl().then(response => {
         dispatch(setUrlCaptcha(response.url));
       });
     }
-    dispatch(requestToApiInProcess(false));
   });
 };
 

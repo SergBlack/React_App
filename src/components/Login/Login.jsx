@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './Login.module.css';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { loginThunk } from '../../Redux/auth-reducer';
@@ -12,7 +13,6 @@ import {
 } from './../Utilities/validators';
 import { Captcha } from '../Common/FormControls/Captcha';
 import { Redirect } from 'react-router-dom';
-import Preloader from '../Common/Preloader/Preloader';
 
 export const maxLength15 = maxLength(15);
 export const minLength8 = minLength(8);
@@ -47,16 +47,19 @@ const LoginForm = props => {
       <div>
         <button>Login</button>
       </div>
-      {props.captchaUrl ? (
-        <Field
-          name={'captcha'}
-          component={Captcha}
-          label={'captcha'}
-          type={'text'}
-          validate={[required]}
-          captchaUrl={props.captchaUrl}
-        />
-      ) : null}
+      <div className={styles.commonError}>{props.error}</div>
+      <div>
+        {props.captchaUrl ? (
+          <Field
+            name={'captcha'}
+            component={Captcha}
+            label={'captcha'}
+            type={'text'}
+            validate={[required]}
+            captchaUrl={props.captchaUrl}
+          />
+        ) : null}
+      </div>
     </form>
   );
 };
@@ -66,21 +69,16 @@ const LoginReduxForm = reduxForm({
 })(LoginForm);
 
 const Login = props => {
-  debugger;
   const onSubmit = formData => {
     props.loginThunk({ ...formData });
   };
   return (
     <div>
-      <div>
-        {props.isAuth ? (
-          <Redirect to={'/profile'} />
-        ) : (
-          <LoginReduxForm onSubmit={onSubmit} captchaUrl={props.captchaUrl} />
-        )}
-      </div>
-      <Preloader isLoading={props.requestInProcess} />
-      {props.error ? 'Wrong email or password. Try again' : null}
+      {props.isAuth ? (
+        <Redirect to={'/profile'} />
+      ) : (
+        <LoginReduxForm onSubmit={onSubmit} captchaUrl={props.captchaUrl} />
+      )}
     </div>
   );
 };
@@ -88,8 +86,7 @@ const Login = props => {
 const mapStateToProps = state => ({
   isAuth: state.auth.isAuth,
   error: state.auth.error,
-  captchaUrl: state.auth.captchaUrl,
-  requestInProcess: state.auth.requestInProcess
+  captchaUrl: state.auth.captchaUrl
 });
 
 export default connect(mapStateToProps, { loginThunk })(Login);

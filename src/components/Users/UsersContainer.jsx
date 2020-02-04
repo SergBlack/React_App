@@ -50,12 +50,21 @@ let mapStateToProps = state => {
   };
 };
 
+// export default compose(
+//   connect(mapStateToProps, {
+//     follow,
+//     unfollow,
+//     getUsers,
+//     setCurrentPage
+//   }),
+//   withAuthRedirect
+// )(UsersContainer);
+
 export default compose(
   connect(mapStateToProps, {
     follow,
     unfollow,
     getUsers,
     setCurrentPage
-  }),
-  withAuthRedirect
+  })
 )(UsersContainer);
