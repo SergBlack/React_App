@@ -2,11 +2,17 @@ import React from 'react';
 import styles from './ProfileInfo.module.css';
 import lakes from '../../../images/ozera.jpg';
 import ProfileStatus from './ProfileStatus';
+import logo from '../../../images/logo.png';
 
 const ProfileInfo = props => {
   if (!props.profile) {
     return <></>;
   }
+
+  const onLoadingPhoto = (file) => {
+
+  }
+
   return (
     <div>
       <div>
@@ -15,9 +21,11 @@ const ProfileInfo = props => {
       <div className={styles.descriptionBlock}>
         <img
           className={styles.ava}
-          src={props.profile.photos.small}
+          src={props.profile.photos.small === null ? logo : props.profile.photos.small}
           alt="User avatar"
         />
+        {props.isOwner ? null : <input type={"file"} onChange={onLoadingPhoto}/>}
+
         <div>{`User ID: ${props.profile.userId}`}</div>
         <div>{`Name: ${props.profile.fullName}`}</div>
         <div>{`Looking for a job: ${props.profile.lookingForAJob}`}</div>
