@@ -4,13 +4,14 @@ import { connect } from 'react-redux';
 import {
   getUserProfile,
   getUserStatus,
-  putUserStatus
+  putUserStatus,
+  uploadPhoto
 } from './../../Redux/profile-reducer';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 
 class ProfileContainer extends React.Component {
-  getUserData () {
+  getUserData() {
     let userId = this.props.match.params.userId;
 
     if (!userId) {
@@ -28,8 +29,8 @@ class ProfileContainer extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.props.match.params.userId !== prevProps.match.params.userId){
-     this.getUserData();
+    if (this.props.match.params.userId !== prevProps.match.params.userId) {
+      this.getUserData();
     }
   }
 
@@ -54,7 +55,8 @@ export default compose(
   connect(mapStateToProps, {
     getUserProfile,
     getUserStatus,
-    putUserStatus
+    putUserStatus,
+    uploadPhoto
   }),
   withRouter
 )(ProfileContainer);

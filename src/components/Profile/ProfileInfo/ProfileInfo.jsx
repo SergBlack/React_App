@@ -9,8 +9,9 @@ const ProfileInfo = props => {
     return <></>;
   }
 
-  const onLoadingPhoto = (file) => {
-
+  const onUploadingPhoto = (e) => {
+    const userPhoto = e.target.files[0];
+    props.uploadPhoto(userPhoto);
   }
 
   return (
@@ -24,7 +25,7 @@ const ProfileInfo = props => {
           src={props.profile.photos.small === null ? logo : props.profile.photos.small}
           alt="User avatar"
         />
-        {props.isOwner ? null : <input type={"file"} onChange={onLoadingPhoto}/>}
+        {props.isOwner ? null : <input type={"file"} id={'photo'} onChange={onUploadingPhoto} />}
 
         <div>{`User ID: ${props.profile.userId}`}</div>
         <div>{`Name: ${props.profile.fullName}`}</div>

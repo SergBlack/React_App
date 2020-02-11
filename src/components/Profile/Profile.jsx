@@ -9,7 +9,8 @@ const Profile = props => {
         profile={props.profile}
         status={props.status}
         putUserStatus={props.putUserStatus}
-        isOwner = {props.isOwner}
+        isOwner={props.isOwner}
+        uploadPhoto={props.uploadPhoto}
       />
       <MyPostsContainer />
     </div>
