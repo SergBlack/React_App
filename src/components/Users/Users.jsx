@@ -1,45 +1,19 @@
-import React from 'react';
-import styles from './Users.module.css';
-import logo from './../../images/logo.png';
-import { NavLink } from 'react-router-dom';
+import React from "react";
+import styles from "./Users.module.css";
+import logo from "./../../images/logo.png";
+import { NavLink } from "react-router-dom";
+import Paginator from "../Common/Paginator/Paginator";
 
 const Users = props => {
-  let pagesCount = Math.ceil(props.totalUsersCount / props.pageUsersCount);
-  //pagination 1900 users po 10 na stranicu
-  const pagesArr = Array.from({ length: pagesCount }, (v, i) => i + 1); //array [0...190] 190 stranic
-  let pagesPerList = pagesCount / props.pageBarCount; // 19 listov s pagination
-
-  //fin
-  let pages = [];
-  for (let i = 1; i <= pagesCount; i++) {
-    pages.push(i);
-  }
   return (
     <div>
-      <div>
-        {pages.map(page => {
-          return (
-            <span
-              className={props.currentPage === page && styles.selected}
-              onClick={() => {
-                props.onPageChanged(page);
-              }}
-            >
-              {page}
-            </span>
-          );
-        })}
-      </div>
+      <Paginator {...props} />
       {props.users.map(u => (
         <div key={u.id} className={styles.userBox}>
           <span>
             <div>
               <NavLink to={`/profile/${u.id}`}>
-                <img
-                  src={u.photos.small === null ? logo : u.photos.small}
-                  alt="ava"
-                  className={styles.avatar}
-                />
+                <img src={u.photos.small === null ? logo : u.photos.small} alt="ava" className={styles.avatar} />
               </NavLink>
             </div>
             <div>
@@ -53,22 +27,22 @@ const Users = props => {
                   Unfollow
                 </button>
               ) : (
-                <button
-                  disabled={props.followingUserId.some(id => id === u.id)}
-                  onClick={() => {
-                    props.follow(u.id);
-                  }}
-                >
-                  Follow
+                  <button
+                    disabled={props.followingUserId.some(id => id === u.id)}
+                    onClick={() => {
+                      props.follow(u.id);
+                    }}
+                  >
+                    Follow
                 </button>
-              )}
+                )}
             </div>
           </span>
           <span>
             <span>
               <div>{u.name}</div>
               <div>ID:{u.id}</div>
-              <div>Status: {!u.status ? '' : u.status}</div>
+              <div>Status: {!u.status ? "" : u.status}</div>
             </span>
             <span>
               <div>City</div>

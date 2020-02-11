@@ -1,14 +1,17 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import Users from './Users';
+import React from "react";
+import { connect } from "react-redux";
+import Users from "./Users";
+import { follow, unfollow, getUsers, setCurrentPage } from "../../Redux/users-reducer";
+import Preloader from "../Common/Preloader/Preloader";
+import { compose } from "redux";
 import {
-  follow,
-  unfollow,
-  getUsers,
-  setCurrentPage
-} from '../../Redux/users-reducer';
-import Preloader from '../Common/Preloader/Preloader';
-import { compose } from 'redux';
+  getUsersList,
+  getTotalUsersCount,
+  getPageUsersCount,
+  getCurrentPage,
+  getIsLoading,
+  getFollowingUserId
+} from "../Utilities/selectors";
 
 class UsersContainer extends React.Component {
   componentDidMount() {
@@ -41,25 +44,14 @@ class UsersContainer extends React.Component {
 
 let mapStateToProps = state => {
   return {
-    users: state.usersPage.users,
-    totalUsersCount: state.usersPage.totalUsersCount,
-    pageUsersCount: state.usersPage.pageUsersCount,
-    currentPage: state.usersPage.currentPage,
-    isLoading: state.usersPage.isLoading,
-    followingUserId: state.usersPage.followingUserId,
-    pageBarCount: state.usersPage.pageBarCount
+    users: getUsersList(state),
+    totalUsersCount: getTotalUsersCount(state),
+    pageUsersCount: getPageUsersCount(state),
+    currentPage: getCurrentPage(state),
+    isLoading: getIsLoading(state),
+    followingUserId: getFollowingUserId(state)
   };
 };
-
-// export default compose(
-//   connect(mapStateToProps, {
-//     follow,
-//     unfollow,
-//     getUsers,
-//     setCurrentPage
-//   }),
-//   withAuthRedirect
-// )(UsersContainer);
 
 export default compose(
   connect(mapStateToProps, {

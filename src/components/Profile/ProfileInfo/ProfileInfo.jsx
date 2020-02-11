@@ -1,7 +1,7 @@
-import React from 'react';
-import styles from './ProfileInfo.module.css';
-import lakes from '../../../images/ozera.jpg';
-import ProfileStatus from './ProfileStatus';
+import React from "react";
+import styles from "./ProfileInfo.module.css";
+import lakes from "../../../images/ozera.jpg";
+import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import logo from '../../../images/logo.png';
 
 const ProfileInfo = props => {
@@ -30,10 +30,7 @@ const ProfileInfo = props => {
         <div>{`User ID: ${props.profile.userId}`}</div>
         <div>{`Name: ${props.profile.fullName}`}</div>
         <div>{`Looking for a job: ${props.profile.lookingForAJob}`}</div>
-        <ProfileStatus
-          status={props.status}
-          putUserStatus={props.putUserStatus}
-        />
+        <ProfileStatusWithHooks status={props.status} putUserStatus={props.putUserStatus} />
         <div>{`Description Job: ${props.profile.lookingForAJobDescription}`}</div>
         <div>
           <ul>
@@ -49,7 +46,7 @@ const ProfileInfo = props => {
           </ul>
         </div>
         <div>
-          Photos:{' '}
+          Photos:{" "}
           <div>
             <img src={props.profile.photos.large} alt="avatar" />
           </div>
