@@ -1,16 +1,17 @@
-import { userAPI } from "../api/api";
+import { userAPI } from '../api/api';
 
-const FOLLOW = "FOLLOW";
-const UNFOLLOW = "UNFOLLOW";
-const SET_USERS = "SET_USERS";
-const SET_PAGE = "SET_PAGE";
-const SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT";
-const LOADING_IN_PROGRESS = "IS_LOADING_IN_PROGRESS";
-const FOLLOWING_IN_PROGRESS = "FOLLOWING_IN_PROGRESS";
+const FOLLOW = 'FOLLOW';
+const UNFOLLOW = 'UNFOLLOW';
+const SET_USERS = 'SET_USERS';
+const SET_PAGE = 'SET_PAGE';
+const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
+const LOADING_IN_PROGRESS = 'IS_LOADING_IN_PROGRESS';
+const FOLLOWING_IN_PROGRESS = 'FOLLOWING_IN_PROGRESS';
 
 let initialState = {
   users: [],
   pageUsersCount: 10,
+  pageBarCount: 10,
   totalUsersCount: 0,
   currentPage: 1,
   isLoading: false,

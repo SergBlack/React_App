@@ -8,7 +8,6 @@ import {
   setCurrentPage
 } from '../../Redux/users-reducer';
 import Preloader from '../Common/Preloader/Preloader';
-import { withAuthRedirect } from '../HOC/withAuthRedirect';
 import { compose } from 'redux';
 
 class UsersContainer extends React.Component {
@@ -33,6 +32,7 @@ class UsersContainer extends React.Component {
           follow={this.props.follow}
           unfollow={this.props.unfollow}
           followingUserId={this.props.followingUserId}
+          pageBarCount={this.props.pageBarCount}
         />
       </>
     );
@@ -46,7 +46,8 @@ let mapStateToProps = state => {
     pageUsersCount: state.usersPage.pageUsersCount,
     currentPage: state.usersPage.currentPage,
     isLoading: state.usersPage.isLoading,
-    followingUserId: state.usersPage.followingUserId
+    followingUserId: state.usersPage.followingUserId,
+    pageBarCount: state.usersPage.pageBarCount
   };
 };
 

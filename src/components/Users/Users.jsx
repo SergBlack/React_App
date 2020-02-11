@@ -5,6 +5,11 @@ import { NavLink } from 'react-router-dom';
 
 const Users = props => {
   let pagesCount = Math.ceil(props.totalUsersCount / props.pageUsersCount);
+  //pagination 1900 users po 10 na stranicu
+  const pagesArr = Array.from({ length: pagesCount }, (v, i) => i + 1); //array [0...190] 190 stranic
+  let pagesPerList = pagesCount / props.pageBarCount; // 19 listov s pagination
+
+  //fin
   let pages = [];
   for (let i = 1; i <= pagesCount; i++) {
     pages.push(i);
